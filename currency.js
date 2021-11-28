@@ -25,51 +25,44 @@ var CurrencyConverter = function (_React$Component) {
   }
 
   _createClass(CurrencyConverter, [{
-    key: 'toUsd',
+    key: "toUsd",
     value: function toUsd(amount, rate) {
       return amount * (1 / rate);
     }
   }, {
-    key: 'toEuro',
+    key: "toEuro",
     value: function toEuro(amount, rate) {
       return amount * rate;
     }
   }, {
-    key: 'handleUsdChange',
-    value: function handleUsdChange(event) {
-      var input = parseFloat(event.target.value);
+    key: "convert",
+    value: function convert(amount, rate, equation) {
+      var input = parseFloat(amount);
       if (Number.isNaN(input)) {
-        this.setState({
-          usd: '',
-          euro: ''
-        });
-        return; // early return
+        return '';
       }
-      var euro = this.toEuro(input, this.state.rate).toFixed(3);
+      return equation(input, rate).toFixed(3);
+    }
+  }, {
+    key: "handleUsdChange",
+    value: function handleUsdChange(event) {
+      var euro = this.convert(event.target.value, this.state.rate, this.toEuro);
       this.setState({
-        usd: input,
+        usd: event.target.value,
         euro: euro
       });
     }
   }, {
-    key: 'handleEuroChange',
+    key: "handleEuroChange",
     value: function handleEuroChange(event) {
-      var input = parseFloat(event.target.value);
-      if (Number.isNaN(input)) {
-        this.setState({
-          usd: '',
-          euro: ''
-        });
-        return; // early return
-      }
-      var usd = this.toUsd(input, this.state.rate).toFixed(3);
+      var usd = this.convert(event.target.value, this.state.rate, this.toUsd);
       this.setState({
-        euro: input,
+        euro: event.target.value,
         usd: usd
       });
     }
   }, {
-    key: 'render',
+    key: "render",
     value: function render() {
       var _state = this.state,
           rate = _state.rate,
@@ -78,46 +71,46 @@ var CurrencyConverter = function (_React$Component) {
 
 
       return React.createElement(
-        'div',
-        { className: 'container' },
+        "div",
+        { className: "container" },
         React.createElement(
-          'div',
-          { className: 'text-center p-3 mb-2' },
+          "div",
+          { className: "text-center p-3 mb-2" },
           React.createElement(
-            'h2',
-            { className: 'mb-2' },
-            'Currency Converter'
+            "h2",
+            { className: "mb-2" },
+            "Currency Converter"
           ),
           React.createElement(
-            'h4',
+            "h4",
             null,
-            'USD 1 : ',
+            "USD 1 : ",
             rate,
-            ' EURO'
+            " EURO"
           )
         ),
         React.createElement(
-          'div',
-          { className: 'row text-center' },
+          "div",
+          { className: "row text-center" },
           React.createElement(
-            'div',
-            { className: 'col-12' },
+            "div",
+            { className: "col-12" },
             React.createElement(
-              'span',
-              { className: 'mr-1' },
-              'USD'
+              "span",
+              { className: "mr-1" },
+              "USD"
             ),
-            React.createElement('input', { value: usd, onChange: this.handleUsdChange, type: 'number' }),
+            React.createElement("input", { value: usd, onChange: this.handleUsdChange, type: "number" }),
             React.createElement(
-              'span',
-              { className: 'mx-3' },
-              '='
+              "span",
+              { className: "mx-3" },
+              "="
             ),
-            React.createElement('input', { value: euro, onChange: this.handleEuroChange, type: 'number' }),
+            React.createElement("input", { value: euro, onChange: this.handleEuroChange, type: "number" }),
             React.createElement(
-              'span',
-              { className: 'ml-1' },
-              'EURO'
+              "span",
+              { className: "ml-1" },
+              "EURO"
             )
           )
         )
